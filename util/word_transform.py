@@ -6,9 +6,10 @@ CHAR_LIST = "abcdefghijklmnopqrstuvwxyzàáâãèéêìíòóôõùúýăđĩũ�
 def delete_char(word, num_char=1):
     word = [c for c in word]
     n = len(word)
-    pos = np.random.choice(range(1,n), num_char, replace=False)
-    for i in pos:
-        word[i] = ''
+    if n>2:
+        pos = np.random.choice(range(1,n), num_char, replace=False)
+        for i in pos:
+            word[i] = ''
     word = ''.join(word)
     return word
 
