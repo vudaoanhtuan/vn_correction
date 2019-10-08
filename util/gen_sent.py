@@ -11,13 +11,14 @@ parser = argparse.ArgumentParser()
 parser.add_argument('corpus')
 parser.add_argument('word_list')
 parser.add_argument('--percent', type=float, default=0.5)
+parser.add_argument('--max_len', type=int, default=30)
 parser.add_argument('-o', '--output', default='bisent.tsv')
 
-def generate_bisent(sent, word_list, max_sent_len=30, percent=0.5):
+def generate_bisent(sent, word_list, max_len=30, percent=0.5):
     sent = preprocess(sent)
     sent = sent.split()
-    if len(sent) > max_sent_len:
-        sent = sent[:max_sent_len]
+    if len(sent) > max_len:
+        sent = sent[:max_len]
     w_sent = []
     for w in sent:
         change_word = np.random.choice([True, False], p=[percent, 1-percent])
@@ -39,5 +40,5 @@ if __name__=='__main__':
 
     with open(args.output, 'w') as f:
         for sent in tqdm(corpus):
-            s,w = generate_bisent(sent, word_list, args.percent)
+            s,w = generate_bisent(sent, word_list, max_len=args.max_len, percent=args.percent)
             f.write(w+'\t'+s+'\n')
